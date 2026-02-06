@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4a29c44c-a42a-4731-9b12-18177ca6e0bc" name="Changes" comment="Add Prettier configuration for IntelliJ">
-      <change afterPath="$PROJECT_DIR$/src/app/interfaces/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/interfaces/public-holidays-response.interface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/app/services/public-holidays.service.ts" afterDir="false" />
+    <list default="true" id="4a29c44c-a42a-4731-9b12-18177ca6e0bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/calendar.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/calendar.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/services/storage.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/services/storage.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/constants/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/constants/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +37,9 @@
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 6
@@ -101,7 +99,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1770414528106</updated>
-      <workItem from="1770414531222" duration="4541000" />
+      <workItem from="1770414531222" duration="5671000" />
     </task>
     <task id="LOCAL-00001" summary="Initialize Angular project with default configuration and Taiga UI dependencies.">
       <option name="closed" value="true" />
@@ -143,7 +141,39 @@
       <option name="project" value="LOCAL" />
       <updated>1770419058433</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Update IntelliJ project settings to include Prettier, TypeScript path, and VCS configuration changes.">
+      <option name="closed" value="true" />
+      <created>1770419089209</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1770419089209</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Integrate public holidays functionality using Nager.Date API and display holidays on the calendar.">
+      <option name="closed" value="true" />
+      <created>1770419109862</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1770419109862</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Add `parseIsoDateToDayMonth` method to `calendar.service` and update imports in `storage.service`">
+      <option name="closed" value="true" />
+      <created>1770419116468</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1770419116468</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Refactor `parseIsoDateToDayMonth` to ignore the year component in `calendar.service`.">
+      <option name="closed" value="true" />
+      <created>1770419205631</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1770419205631</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +197,10 @@
     <MESSAGE value="Add run configurations for 'Start' and 'Install' npm scripts in IntelliJ" />
     <MESSAGE value="Add IntelliJ watcherTasks.xml to configure suppressed tasks" />
     <MESSAGE value="Add Prettier configuration for IntelliJ" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Prettier configuration for IntelliJ" />
+    <MESSAGE value="Update IntelliJ project settings to include Prettier, TypeScript path, and VCS configuration changes." />
+    <MESSAGE value="Integrate public holidays functionality using Nager.Date API and display holidays on the calendar." />
+    <MESSAGE value="Add `parseIsoDateToDayMonth` method to `calendar.service` and update imports in `storage.service`" />
+    <MESSAGE value="Refactor `parseIsoDateToDayMonth` to ignore the year component in `calendar.service`." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor `parseIsoDateToDayMonth` to ignore the year component in `calendar.service`." />
   </component>
 </project>

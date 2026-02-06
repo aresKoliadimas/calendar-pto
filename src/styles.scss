@@ -8,19 +8,19 @@ body {
 .t-cell {
   color: gray !important;
 
-  &.t-cell_today {
-    color: black !important;
-    font-weight: bold;
-    background: rgb(203, 213, 225, 0.5);
-    border-radius: 0.625rem;
-  }
-
   &[data-type='weekend'] {
-    color: darkgreen !important;
+    color: var(--tui-status-positive) !important;
     cursor: default !important;
   }
 
   &[data-range='active'] {
     color: lightgreen !important;
+  }
+
+  &.t-cell_today {
+    color: var(--tui-text-primary) !important;
+    font-weight: bold;
+    background: rgb(203, 213, 225, 0.5);
+    border-radius: 0.625rem;
   }
 }

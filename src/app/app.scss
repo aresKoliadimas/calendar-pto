@@ -43,11 +43,11 @@
           font-size: 2rem;
 
           &.success {
-            color: dodgerblue;
+            color: var(--tui-text-action);
           }
 
           &.danger {
-            color: darkorange;
+            color: var(--tui-text-negative);
           }
         }
       }
