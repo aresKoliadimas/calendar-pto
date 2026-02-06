@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TuiDay } from '@taiga-ui/cdk';
-import { StoredPtoDay, StoredYearState } from '../interfaces/stored-year-state.interface';
+import { StoredPtoDay, StoredYearState } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
