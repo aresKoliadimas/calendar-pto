@@ -10,7 +10,7 @@ export class CalendarService {
   }
 
   public parseIsoDateToDayMonth(iso: string): { month: number; day: number } {
-    const [yearStr, monthStr, dayStr]: string[] = iso.split('-');
+    const [_, monthStr, dayStr]: string[] = iso.split('-');
 
     return {
       month: Number(monthStr) - 1,
