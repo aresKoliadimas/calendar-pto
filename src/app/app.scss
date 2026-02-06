@@ -16,6 +16,7 @@
     background: rgb(5, 5, 5);
     top: 0;
     z-index: 2;
+    border-bottom: 1px var(--tui-border-focus) solid;
 
     > section {
       gap: 5rem;
@@ -70,5 +71,6 @@
     background: rgb(5, 5, 5);
     bottom: 0;
     z-index: 2;
+    border-top: 1px var(--tui-border-focus) solid;
   }
 }
