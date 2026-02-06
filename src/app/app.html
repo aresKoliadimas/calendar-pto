@@ -1,0 +1,51 @@
+<header>
+  <section>
+    <div>
+      <button
+        tuiIconButton
+        appearance="flat-grayscale"
+        iconStart="@tui.chevron-left"
+        size="m"
+        type="button"
+        [disabled]="year === startYear"
+        (click)="onPrevYear()"
+      ></button>
+
+      <h1>{{ year }}</h1>
+
+      <button
+        tuiIconButton
+        appearance="flat-grayscale"
+        iconStart="@tui.chevron-right"
+        size="m"
+        type="button"
+        [disabled]="year === startYear + 10"
+        (click)="onNextYear()"
+      ></button>
+    </div>
+
+    <section>
+      <h2>Remaining PTO:</h2>
+
+      <span [ngClass]="{ success: remaining > 7, danger: remaining <= 7 }">
+        {{ remaining }}
+      </span>
+    </section>
+  </section>
+</header>
+
+<div>
+  @for (month of months; track month) {
+    <tui-calendar
+      [markerHandler]="markerHandler"
+      [maxViewedMonth]="month"
+      [minViewedMonth]="month"
+      [month]="month"
+      [showAdjacent]="false"
+      [value]="taken"
+      (dayClick)="onDayClick($event)"
+    />
+  }
+</div>
+
+<footer></footer>
