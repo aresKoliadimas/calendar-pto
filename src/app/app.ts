@@ -7,12 +7,18 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TuiDay, TuiMonth } from '@taiga-ui/cdk';
-import { TuiInputDateTime } from '@taiga-ui/kit';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  TuiFieldErrorPipe,
+  TuiInputDateTime,
+  TuiInputNumberDirective,
+  TuiInputRange,
+  tuiValidationErrorsProvider,
+} from '@taiga-ui/kit';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ALLOWANCE, CURRENT_YEAR, ONE_DOT, START_YEAR } from './constants/constants';
-import { TuiButton, TuiMarkerHandler } from '@taiga-ui/core';
+import { TuiButton, TuiError, TuiMarkerHandler, TuiTextfieldComponent } from '@taiga-ui/core';
 import { CalendarService, PublicHolidaysService, StorageService } from './services';
-import { catchError, EMPTY, finalize, map, Subscription, tap } from 'rxjs';
+import { catchError, EMPTY, finalize, Subscription, tap } from 'rxjs';
 import { PublicHolidayResponse, PublicHolidaysResponse } from './interfaces';
 
 @Component({
@@ -20,13 +26,31 @@ import { PublicHolidayResponse, PublicHolidaysResponse } from './interfaces';
   templateUrl: './app.html',
   styleUrls: ['./app.scss'],
   standalone: true,
-  imports: [CommonModule, TuiInputDateTime, ReactiveFormsModule, FormsModule, TuiButton],
-  providers: [StorageService, CalendarService],
+  imports: [
+    CommonModule,
+    TuiInputDateTime,
+    ReactiveFormsModule,
+    FormsModule,
+    TuiButton,
+    TuiTextfieldComponent,
+    TuiInputRange,
+    TuiInputNumberDirective,
+    TuiError,
+    TuiFieldErrorPipe,
+  ],
+  providers: [
+    StorageService,
+    CalendarService,
+    tuiValidationErrorsProvider({
+      required: 'Required field',
+    }),
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App implements OnInit, OnDestroy {
-  public isLoading: boolean = true;
   public readonly startYear = START_YEAR;
+  public readonly allowanceControl = new FormControl<number | null>(ALLOWANCE, Validators.required);
+  public isLoading: boolean = true;
   public year: number = CURRENT_YEAR;
   public months: TuiMonth[] = [];
   public allowance: number = ALLOWANCE;
@@ -75,6 +99,18 @@ export class App implements OnInit, OnDestroy {
         }),
         finalize(() => {
           this.isLoading = false;
+
+          this._cdr.markForCheck();
+        }),
+      )
+      .subscribe();
+
+    this.allowanceControl.valueChanges
+      .pipe(
+        tap((value: number | null) => {
+          this.allowance = value || ALLOWANCE;
+          this.remaining = this.allowance - this.taken.length;
+          this._storageService.saveYearState(this.year, this.allowance, this.taken);
 
           this._cdr.markForCheck();
         }),

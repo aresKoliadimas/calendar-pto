@@ -49,5 +49,17 @@
     }
   </div>
 
-  <footer></footer>
+  <footer>
+    <div></div>
+
+    <div>
+      <tui-textfield>
+        <label tuiLabel>Enter your PTO</label>
+
+        <input tuiInputNumber [formControl]="allowanceControl" />
+      </tui-textfield>
+
+      <tui-error [error]="[] | tuiFieldError | async" [formControl]="allowanceControl" />
+    </div>
+  </footer>
 }
