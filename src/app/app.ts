@@ -18,7 +18,7 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ALLOWANCE, CURRENT_YEAR, ONE_DOT, START_YEAR } from './constants/constants';
 import { TuiButton, TuiError, TuiMarkerHandler, TuiTextfieldComponent } from '@taiga-ui/core';
 import { CalendarService, PublicHolidaysService, StorageService } from './services';
-import { catchError, EMPTY, finalize, Subscription, tap } from 'rxjs';
+import { catchError, EMPTY, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { PublicHolidayResponse, PublicHolidaysResponse } from './interfaces';
 
 @Component({
@@ -62,7 +62,37 @@ export class App implements OnInit, OnDestroy {
   public hoveredDay: string | undefined = undefined;
 
   private _publicHolidays: { name: string; day: TuiDay }[] = [];
-  private _publicHolidaysSubscription: Subscription | null = null;
+
+  private readonly destroyStreams$: Subject<void> = new Subject<void>();
+
+  private readonly _yearSubject: Subject<number> = new Subject<number>();
+  public readonly _year$ = this._yearSubject.asObservable().pipe(
+    tap((year: number) => (this.year = year)),
+    switchMap((year: number) => this._publicHolidaysService.getPublicHolidays$(year)),
+    map((holidays: PublicHolidaysResponse) =>
+      holidays.map((holiday: PublicHolidayResponse) => {
+        const parsedPublicHoliday: { month: number; day: number } =
+          this._calendarService.parseIsoDateToDayMonth(holiday.date);
+
+        return {
+          name: holiday.localName,
+          day: new TuiDay(this.year, parsedPublicHoliday.month, parsedPublicHoliday.day),
+        };
+      }),
+    ),
+    tap((holidays: { name: string; day: TuiDay }[]) => (this._publicHolidays = holidays)),
+    catchError(() => {
+      console.error('Failed to load public holidays');
+
+      return EMPTY;
+    }),
+    tap(() => {
+      this.isLoading = false;
+
+      this._cdr.markForCheck();
+    }),
+    takeUntil(this.destroyStreams$),
+  );
 
   constructor(
     private readonly _cdr: ChangeDetectorRef,
@@ -84,32 +114,9 @@ export class App implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this._publicHolidaysSubscription = this._publicHolidaysService
-      .getPublicHolidays$(this.year)
-      .pipe(
-        tap((holidays: PublicHolidaysResponse) => {
-          this._publicHolidays = holidays.map((holiday: PublicHolidayResponse) => {
-            const parsedPublicHoliday: { month: number; day: number } =
-              this._calendarService.parseIsoDateToDayMonth(holiday.date);
+    this._year$.subscribe();
 
-            return {
-              name: holiday.localName,
-              day: new TuiDay(this.year, parsedPublicHoliday.month, parsedPublicHoliday.day),
-            };
-          });
-        }),
-        catchError(() => {
-          console.error('Failed to load public holidays');
-
-          return EMPTY;
-        }),
-        finalize(() => {
-          this.isLoading = false;
-
-          this._cdr.markForCheck();
-        }),
-      )
-      .subscribe();
+    this._yearSubject.next(this.year);
 
     this.allowanceControl.valueChanges
       .pipe(
@@ -127,9 +134,11 @@ export class App implements OnInit, OnDestroy {
   public onPrevYear(): void {
     if (this.year === START_YEAR) return;
 
+    this.isLoading = true;
+
     const previousYear: number = this.year - 1;
 
-    this.year = previousYear;
+    this._yearSubject.next(previousYear);
 
     if (this._storageService.hasYearState(previousYear)) {
       const state: { allowance: number; taken: TuiDay[] } | void =
@@ -153,9 +162,11 @@ export class App implements OnInit, OnDestroy {
   public onNextYear(): void {
     if (this.year === START_YEAR + 10) return;
 
+    this.isLoading = true;
+
     const nextYear: number = this.year + 1;
 
-    this.year = nextYear;
+    this._yearSubject.next(nextYear);
 
     if (!this._storageService.hasYearState(nextYear)) {
       this._storageService.saveYearState(nextYear, ALLOWANCE, []);
@@ -212,6 +223,7 @@ export class App implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this._publicHolidaysSubscription?.unsubscribe();
+    this.destroyStreams$.next();
+    this.destroyStreams$.complete();
   }
 }
