@@ -169,7 +169,7 @@ export class App implements OnInit, OnDestroy {
     this._yearSubject.next(nextYear);
 
     if (!this._storageService.hasYearState(nextYear)) {
-      this._storageService.saveYearState(nextYear, ALLOWANCE, []);
+      this._storageService.saveYearState(nextYear, this.allowanceControl.value || ALLOWANCE, []);
     }
 
     const state: { allowance: number; taken: TuiDay[] } | void =
