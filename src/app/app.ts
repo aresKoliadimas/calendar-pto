@@ -48,13 +48,13 @@ import { PublicHolidayResponse, PublicHolidaysResponse } from './interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App implements OnInit, OnDestroy {
-  public readonly startYear = START_YEAR;
-  public readonly allowanceControl = new FormControl<number | null>(ALLOWANCE, Validators.required);
+  public readonly startYear: number = START_YEAR;
+  public readonly allowanceControl: FormControl = new FormControl<number | null>(ALLOWANCE, Validators.required);
   public isLoading: boolean = true;
   public year: number = CURRENT_YEAR;
   public months: TuiMonth[] = [];
-  public allowance: number = ALLOWANCE;
-  public remaining: number = ALLOWANCE;
+  public allowance: number = 0;
+  public remaining: number = 0;
   public taken: TuiDay[] = [];
 
   private _publicHolidays: { name: string; day: TuiDay }[] = [];
@@ -73,6 +73,8 @@ export class App implements OnInit, OnDestroy {
     this.taken = loadedYearState?.taken || [];
     this.months = this._calendarService.rebuildMonths(this.year);
     this.remaining = this.allowance - this.taken.length;
+
+    this.allowanceControl.patchValue(this.allowance);
 
     this._cdr.markForCheck();
   }
