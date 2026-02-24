@@ -76,10 +76,25 @@
     max-height: 3.5rem;
 
     > div {
-      &:nth-child(2) {
-      }
       display: flex;
       flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+
+      > div {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+
+        > .t-dot {
+          display: inline-block;
+          inline-size: 0.25rem;
+          block-size: 0.25rem;
+          border-radius: 100%;
+          margin: 0 0 0 1rem;
+          background-color: var(--tui-background-accent-1);
+        }
+      }
     }
   }
 }
