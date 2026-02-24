@@ -49,13 +49,17 @@ import { PublicHolidayResponse, PublicHolidaysResponse } from './interfaces';
 })
 export class App implements OnInit, OnDestroy {
   public readonly startYear: number = START_YEAR;
-  public readonly allowanceControl: FormControl = new FormControl<number | null>(ALLOWANCE, Validators.required);
+  public readonly allowanceControl: FormControl = new FormControl<number | null>(
+    ALLOWANCE,
+    Validators.required,
+  );
   public isLoading: boolean = true;
   public year: number = CURRENT_YEAR;
   public months: TuiMonth[] = [];
   public allowance: number = 0;
   public remaining: number = 0;
   public taken: TuiDay[] = [];
+  public hoveredDay: string | undefined = undefined;
 
   private _publicHolidays: { name: string; day: TuiDay }[] = [];
   private _publicHolidaysSubscription: Subscription | null = null;
@@ -193,6 +197,16 @@ export class App implements OnInit, OnDestroy {
     this.remaining = this.allowance - this.taken.length;
 
     this._storageService.saveYearState(this.year, this.allowance, this.taken);
+
+    this._cdr.markForCheck();
+  }
+
+  public onHoveredDayChange(day: TuiDay | null): void {
+    if (!day) return;
+
+    this.hoveredDay = this._publicHolidays.find(({ day: holiday }: { name: string; day: TuiDay }) =>
+      holiday.daySame(day),
+    )?.name;
 
     this._cdr.markForCheck();
   }

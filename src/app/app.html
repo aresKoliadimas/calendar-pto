@@ -38,6 +38,7 @@
   <div>
     @for (month of months; track month) {
       <tui-calendar
+        [title]="hoveredDay || ''"
         [markerHandler]="markerHandler"
         [maxViewedMonth]="month"
         [minViewedMonth]="month"
@@ -45,6 +46,7 @@
         [showAdjacent]="false"
         [value]="taken"
         (dayClick)="onDayClick($event)"
+        (hoveredItemChange)="onHoveredDayChange($event)"
       />
     }
   </div>
