@@ -61,6 +61,10 @@
     gap: 2rem;
     padding: 5rem;
     justify-content: center;
+
+    > tui-loader {
+      margin: 20% 0;
+    }
   }
 
   > footer {

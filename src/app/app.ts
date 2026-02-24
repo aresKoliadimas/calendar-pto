@@ -16,7 +16,13 @@ import {
 } from '@taiga-ui/kit';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ALLOWANCE, CURRENT_YEAR, ONE_DOT, START_YEAR } from './constants/constants';
-import { TuiButton, TuiError, TuiMarkerHandler, TuiTextfieldComponent } from '@taiga-ui/core';
+import {
+  TuiButton,
+  TuiError,
+  TuiLoader,
+  TuiMarkerHandler,
+  TuiTextfieldComponent,
+} from '@taiga-ui/core';
 import { CalendarService, PublicHolidaysService, StorageService } from './services';
 import { catchError, EMPTY, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { PublicHolidayResponse, PublicHolidaysResponse } from './interfaces';
@@ -37,6 +43,7 @@ import { PublicHolidayResponse, PublicHolidaysResponse } from './interfaces';
     TuiInputNumberDirective,
     TuiError,
     TuiFieldErrorPipe,
+    TuiLoader,
   ],
   providers: [
     StorageService,
